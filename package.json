@@ -1,0 +1,12 @@
+{
+  "name": "digibp-camunda-faas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Andreas Martin",
+  "license": "ISC",
+  "dependencies": {
+    "camunda-external-task-client-js": "^1.1.1",
+    "unirest": "^0.5.1"
+  }
+}
