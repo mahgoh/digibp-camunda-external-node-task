@@ -1,0 +1,5 @@
+ports:
+  - port: 5000
+    onOpen: open-preview
+tasks:
+- command: "npm install

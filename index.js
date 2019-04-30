@@ -20,7 +20,7 @@ const client = new Client({
 
 const unirest = require("unirest");
 
-client.subscribe("GetMenu", { tenantIdIn: ["showcase"] }, async ({ task, taskService }) => {
+client.subscribe("GetMenuInt", { tenantIdIn: ["showcase"] }, async ({ task, taskService }) => {
   var req = unirest("GET", "https://hook.integromat.com/vhk7p513e4fmz7dvgxs65okwq6lx7243");
 
   req.end(async function(res) {
@@ -39,7 +39,7 @@ client.subscribe("GetMenu", { tenantIdIn: ["showcase"] }, async ({ task, taskSer
   });
 });
 
-client.subscribe("AddPizza", { tenantIdIn: ["showcase"] }, async ({ task, taskService }) => {
+client.subscribe("AddPizzaInt", { tenantIdIn: ["showcase"] }, async ({ task, taskService }) => {
   const pizzaName = task.variables.get("name");
 
   var req = unirest("POST", "https://hook.integromat.com/bqfke9sdtrixnplwuyf99fnaken4rkc3");

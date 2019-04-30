@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_0xuj4kr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_0xuj4kr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.0">
   <bpmn:collaboration id="Collaboration_0pk5jq1">
-    <bpmn:participant id="Participant_0u958uc" name="AddPizzaMenu Connector" processRef="Process_064jch6" />
-    <bpmn:participant id="Participant_06cwomw" name="AddPizzaMenu External" processRef="Process_18z591h" />
+    <bpmn:participant id="Participant_0u958uc" name="PizzaMenu Connector" processRef="Process_064jch6" />
+    <bpmn:participant id="Participant_06cwomw" name="PizzaMenu External" processRef="Process_18z591h" />
     <bpmn:participant id="Participant_0zq4ux2" name="Integromat" processRef="Process_0v5dfs8" />
     <bpmn:participant id="Participant_02zl8bx" name="External Task Client" processRef="Process_1qyhwuq" />
     <bpmn:messageFlow id="MessageFlow_15i5a4o" name="POST&#10;request&#10;(JSON)" sourceRef="Task_1vjohyi" targetRef="Task_03eexga" />
@@ -18,7 +18,7 @@
     <bpmn:messageFlow id="MessageFlow_0e7o6pa" name="GET&#10;request" sourceRef="Task_1puvpx3" targetRef="Task_0dxy6wr" />
     <bpmn:messageFlow id="MessageFlow_1rjvq1f" name="GET&#10;response&#10;(JSON)" sourceRef="Task_0dxy6wr" targetRef="Task_1puvpx3" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_064jch6" name="AddPizzaMenuConnector" isExecutable="true">
+  <bpmn:process id="Process_064jch6" name="PizzaMenuConnector" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Requested Menu">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -84,7 +84,7 @@ object.PizzaMenu;</camunda:script>
     <bpmn:sequenceFlow id="SequenceFlow_0z2o20i" sourceRef="Task_1r9y7t5" targetRef="Task_0xu4rpq" />
     <bpmn:sequenceFlow id="SequenceFlow_1rxjf8z" sourceRef="Task_1vjohyi" targetRef="Task_1r9y7t5" />
   </bpmn:process>
-  <bpmn:process id="Process_18z591h" name="AddPizzaMenuExternal" isExecutable="true">
+  <bpmn:process id="Process_18z591h" name="PizzaMenuExternal" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1knhi1d" name="Requested Menu">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -100,11 +100,11 @@ object.PizzaMenu;</camunda:script>
     <bpmn:sequenceFlow id="SequenceFlow_000ciw6" sourceRef="UserTask_0xdptdh" targetRef="EndEvent_0bccgk0" />
     <bpmn:sequenceFlow id="SequenceFlow_0dk2bzr" sourceRef="ServiceTask_0hm37c6" targetRef="UserTask_0xdptdh" />
     <bpmn:sequenceFlow id="SequenceFlow_0sojst6" sourceRef="ServiceTask_0ls4y2o" targetRef="ServiceTask_0hm37c6" />
-    <bpmn:serviceTask id="ServiceTask_0ls4y2o" name="Add Pizza" camunda:type="external" camunda:topic="AddPizza">
+    <bpmn:serviceTask id="ServiceTask_0ls4y2o" name="Add Pizza" camunda:type="external" camunda:topic="AddPizzaInt">
       <bpmn:incoming>SequenceFlow_1wsjnjm</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0sojst6</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="ServiceTask_0hm37c6" name="Get Menu" camunda:type="external" camunda:topic="GetMenu">
+    <bpmn:serviceTask id="ServiceTask_0hm37c6" name="Get Menu" camunda:type="external" camunda:topic="GetMenuInt">
       <bpmn:incoming>SequenceFlow_0sojst6</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dk2bzr</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -119,11 +119,11 @@ object.PizzaMenu;</camunda:script>
     </bpmn:userTask>
     <bpmn:association id="Association_13yi4k0" sourceRef="ServiceTask_0ls4y2o" targetRef="TextAnnotation_0ikxhyf" />
     <bpmn:association id="Association_06ye971" sourceRef="ServiceTask_0hm37c6" targetRef="TextAnnotation_1s6xltl" />
-    <bpmn:textAnnotation id="TextAnnotation_1s6xltl">
-      <bpmn:text>Topic name: "GetMenu"</bpmn:text>
-    </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_0ikxhyf">
-      <bpmn:text>Topic name: "AddPizza"</bpmn:text>
+      <bpmn:text>Topic "AddPizzaInt"</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_1s6xltl">
+      <bpmn:text>Topic "GetMenuInt"</bpmn:text>
     </bpmn:textAnnotation>
   </bpmn:process>
   <bpmn:process id="Process_0v5dfs8" isExecutable="false">
@@ -318,18 +318,18 @@ object.PizzaMenu;</camunda:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0ikxhyf_di" bpmnElement="TextAnnotation_0ikxhyf">
-        <dc:Bounds x="323" y="879" width="147" height="30" />
+        <dc:Bounds x="320" y="882" width="153" height="34" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_13yi4k0_di" bpmnElement="Association_13yi4k0">
         <di:waypoint x="397" y="845" />
-        <di:waypoint x="397" y="879" />
+        <di:waypoint x="397" y="882" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_1s6xltl_di" bpmnElement="TextAnnotation_1s6xltl">
-        <dc:Bounds x="494" y="879" width="138" height="30" />
+        <dc:Bounds x="487" y="884" width="151" height="30" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_06ye971_di" bpmnElement="Association_06ye971">
         <di:waypoint x="563" y="845" />
-        <di:waypoint x="563" y="879" />
+        <di:waypoint x="563" y="884" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
