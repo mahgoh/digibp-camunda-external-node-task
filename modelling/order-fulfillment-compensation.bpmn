@@ -4,7 +4,7 @@
   <bpmn:error id="Error_1a9n9ox" name="Payment failed" errorCode="PaymentFailed" />
   <bpmn:error id="Error_0dculrs" name="Out of stock" errorCode="OutOfStock" />
   <bpmn:collaboration id="Collaboration_0angxau">
-    <bpmn:participant id="Participant_19jx4pm" name="Order Fulfillment with Compensation and Escalation" processRef="Process_0b4zhgn" />
+    <bpmn:participant id="Participant_19jx4pm" name="Order Fulfillment with Compensation" processRef="Process_0b4zhgn" />
   </bpmn:collaboration>
   <bpmn:process id="Process_0b4zhgn" isExecutable="true">
     <bpmn:serviceTask id="ServiceTask_1qfm9vv" name="Retrieve payment" camunda:type="external" camunda:topic="Payment">
@@ -57,10 +57,6 @@
       <bpmn:incoming>SequenceFlow_0jqzvqd</bpmn:incoming>
       <bpmn:escalationEventDefinition escalationRef="Escalation_0uuvnsa" />
     </bpmn:endEvent>
-    <bpmn:endEvent id="EndEvent_11ufmvl" name="Goods not shipped in time">
-      <bpmn:incoming>SequenceFlow_0plk1na</bpmn:incoming>
-      <bpmn:compensateEventDefinition activityRef="ServiceTask_1qfm9vv" />
-    </bpmn:endEvent>
     <bpmn:serviceTask id="Task_0m5fvwi" name="Refund payment" isForCompensation="true" camunda:type="external" camunda:topic="RefundPayment" />
     <bpmn:subProcess id="SubProcess_1tgmubh" name="Order cancellation" triggeredByEvent="true">
       <bpmn:startEvent id="StartEvent_105ky70" name="Cancellation requested">
@@ -78,7 +74,7 @@
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="SequenceFlow_1p86o93" sourceRef="IntermediateThrowEvent_1f2tn5j" targetRef="EndEvent_0c22e80" />
     </bpmn:subProcess>
-    <bpmn:boundaryEvent id="BoundaryEvent_1iykfdy" name="24 hours" attachedToRef="ServiceTask_17xyq13">
+    <bpmn:boundaryEvent id="BoundaryEvent_1iykfdy" name="Goods not shipped in 24 hours" attachedToRef="ServiceTask_17xyq13">
       <bpmn:outgoing>SequenceFlow_0plk1na</bpmn:outgoing>
       <bpmn:timerEventDefinition>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10S</bpmn:timeDuration>
@@ -117,10 +113,10 @@
       <bpmn:incoming>SequenceFlow_0pcgdyi</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ezljhj</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:textAnnotation id="TextAnnotation_0ath3ex">
-      <bpmn:text>Process will not terminate.</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_0tas6l9" sourceRef="EndEvent_11ufmvl" targetRef="TextAnnotation_0ath3ex" />
+    <bpmn:endEvent id="EndEvent_11ufmvl" name="Cancellation requested">
+      <bpmn:incoming>SequenceFlow_0plk1na</bpmn:incoming>
+      <bpmn:escalationEventDefinition escalationRef="Escalation_0uuvnsa" />
+    </bpmn:endEvent>
     <bpmn:association id="Association_1nsk5yo" associationDirection="One" sourceRef="BoundaryEvent_0iwwwr7" targetRef="Task_0m5fvwi" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -190,22 +186,13 @@
           <dc:Bounds x="687" y="399" width="61" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_1o9u3an_di" bpmnElement="EndEvent_11ufmvl">
-        <dc:Bounds x="874" y="356" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="855" y="399" width="74" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_0wnqedf_di" bpmnElement="Task_0m5fvwi">
         <dc:Bounds x="478" y="334" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0ath3ex_di" bpmnElement="TextAnnotation_0ath3ex">
-        <dc:Bounds x="909" y="314" width="158" height="30" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_1k45uh1_di" bpmnElement="BoundaryEvent_1iykfdy">
         <dc:Bounds x="810" y="283" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="847" y="313" width="44" height="14" />
+          <dc:Bounds x="846" y="309" width="67" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_15qbx3b_di" bpmnElement="BoundaryEvent_0odarp8">
@@ -283,10 +270,6 @@
         <di:waypoint x="878" y="261" />
         <di:waypoint x="934" y="261" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0tas6l9_di" bpmnElement="Association_0tas6l9">
-        <di:waypoint x="908" y="366" />
-        <di:waypoint x="956" y="344" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1nsk5yo_di" bpmnElement="Association_1nsk5yo">
         <di:waypoint x="433" y="319" />
         <di:waypoint x="433" y="374" />
@@ -297,6 +280,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ParallelGateway_13fz70n_di" bpmnElement="ExclusiveGateway_0r1n5mi">
         <dc:Bounds x="934" y="236" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1qu3f2p_di" bpmnElement="EndEvent_11ufmvl">
+        <dc:Bounds x="874" y="356" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="862" y="399" width="61" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
