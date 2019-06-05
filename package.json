@@ -11,6 +11,7 @@
     "express": "^4.16.4",
     "hoek": "^6.1.2",
     "mime": "^2.4.0",
-    "unirest": "^0.5.1"
+    "unirest": "^0.5.1",
+    "tunnel-agent": ">=0.6.0"
   }
 }
