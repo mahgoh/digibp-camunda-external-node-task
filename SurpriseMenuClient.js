@@ -18,7 +18,7 @@ client.subscribe("GetSurpriseMenu", {
     task,
     taskService
 }) => {
-    const vegetarianGuests = task.variables.get("vegetarianGuests");
+    const vegetarianGuests = task.variables.get("vegetarian");
 
     if (vegetarianGuests) {
         menu = (["pizza", "pasta", "verdura"])[Math.random() * 3 | 0];
