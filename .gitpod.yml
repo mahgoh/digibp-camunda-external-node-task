@@ -3,3 +3,9 @@ ports:
     onOpen: notify
 tasks:
 - command: "npm install"
+
+vscode:
+  extensions:
+    - redhat.java
+    - vscjava.vscode-java-debug
+    - pivotal.vscode-spring-boot
