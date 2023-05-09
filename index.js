@@ -7,4 +7,5 @@ express()
 
 require("./SurpriseMenuClient");
 require("./EvaluateRiskClient");
+require("./UpdatePolicyStatusClient");
 //require("./PizzaClient");
