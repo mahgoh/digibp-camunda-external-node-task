@@ -32,16 +32,16 @@ client.subscribe("EvaluateRisk", {
 }) => {
     const claimAmount = task.variables.getTyped("ClaimAmount");
 
-    // check if float
+    // check if valid types
     if (claimAmount.type !== "float")
         taskService.handleBpmnError(task, "INVALID_TYPE", "ClaimAmount has to be of type float.")
 
     // calculate risk
     let riskType = "unknown"
 
-    if (claimAmount < 100)
+    if (claimAmount.value < 100)
         riskType = (Math.random() < 0.9) ? "low" : "unknown" // 10% chance of "unknown"
-    else if (claimAmount < 500)
+    else if (claimAmount.value < 500)
         riskType = (Math.random() < 0.8) ? "medium" : "unknown" // 20% chance of "unknown"
     else
         riskType = (Math.random() < 0.7) ? "high" : "unknown" // 30% chance of "unknown"
