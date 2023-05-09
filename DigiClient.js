@@ -26,9 +26,9 @@ client.subscribe(
 
     try {
       taskService.complete(task, processVariables)
-      console.log('Premium was successfully estimated!!')
+      console.log('Task:RequestPremium completed.')
     } catch (e) {
-      console.error(`Failed completing premium estimation`)
+      console.error(`Task:RequestPremium FAILED, ${e}`)
     }
   }
 )
@@ -70,9 +70,9 @@ client.subscribe(
 
     try {
       taskService.complete(task, processVariables)
-      console.log('I completed my task successfully!!')
+      console.log('Task:EvaluateRisk completed.')
     } catch (e) {
-      console.error(`Failed completing my task, ${e}`)
+      console.error(`Task:EvaluateRisk FAILED, ${e}`)
     }
   }
 )
@@ -101,9 +101,9 @@ client.subscribe(
     const processVariables = new Variables().set('Status', toBeStatus)
     try {
       taskService.complete(task, processVariables)
-      console.log('I completed my task successfully!!')
+      console.log('Task:UpdatePolicyStatus completed.')
     } catch (e) {
-      console.error(`Failed completing my task, ${e}`)
+      console.error(`Task:UpdatePolicyStatus FAILED, ${e}`)
     }
   }
 )
@@ -131,9 +131,9 @@ client.subscribe(
     })
     try {
       taskService.complete(task, processVariables)
-      console.log('I completed my task successfully!!')
+      console.log('Task:RequestPayment completed.')
     } catch (e) {
-      console.error(`Failed completing my task, ${e}`)
+      console.error(`Task:RequestPayment FAILED, ${e}`)
     }
   }
 )
