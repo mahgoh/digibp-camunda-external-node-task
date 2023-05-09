@@ -5,7 +5,4 @@ express()
     .get("/", (req, res) => res.send("Camunda External Node Task"))
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-require("./SurpriseMenuClient");
-require("./EvaluateRiskClient");
-require("./UpdatePolicyStatusClient");
-//require("./PizzaClient");
+require("./DigiClient");
