@@ -6,4 +6,5 @@ express()
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 require("./SurpriseMenuClient");
+require("./EvaluateRiskClient");
 //require("./PizzaClient");
